@@ -82,7 +82,7 @@ class Application
         {
             this.keyInput.update(this.playerInput, dt);
         }
-        this.drops.update(dt);
+        this.drops.update(this.player, this.score, dt);
         this.player.update(this.playerInput, dt);
         this.score.update(dt);
     }

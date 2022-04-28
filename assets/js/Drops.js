@@ -4,8 +4,8 @@ class Drops
     {
         this.windowSize = app.resolution;
         this.spawnLocationY = this.windowSize.y * -0.1;
-        /** @type {Array<Vector2>} */
-        this.positions = [];
+        /** @type {Array<{imageIndex: number, position: Vector2>} */
+        this.items = [];
 
         this.spawn = {
             timer: 0,
@@ -13,38 +13,57 @@ class Drops
         };
 
 
-        this.size = new Vector2(this.windowSize.x * 0.2, this.windowSize.y * 0.2);
+        this.size = new Vector2(this.windowSize.x * 0.1, this.windowSize.y * 0.15);
         this.spritesheet = {
-            texture: new Image(),
-            textureRect: new Rectangle(0, 0, 80, 80),
+            textures: [new Image(), new Image(), new Image(), new Image()],
+            textureRect: new Rectangle(0, 0, 598, 870),
             origin: new Vector2(this.size.x * -0.5, this.size.y * -0.5),
         };
-        this.spritesheet.texture.src = "assets/img/Player.png";
+        this.spritesheet.textures[0].src = "assets/img/food.png";
+        this.spritesheet.textures[1].src = "assets/img/electricity.png";
+        this.spritesheet.textures[2].src = "assets/img/moneybag.png";
+        this.spritesheet.textures[3].src = "assets/img/waterdrop.png";
     }
 
     /**
      * No update for background.
      * @param {number} deltaTime Represents delta time between each update call.
      */
-    update(deltaTime)
+    update(player, score, deltaTime)
     {
         const moveSpeed = 0.5 * deltaTime;
-        this.positions.forEach((position, index, array) =>
+        this.items.forEach((item, index, array) =>
         {
-            position.y += moveSpeed;
-            if (position.y > this.windowSize.y + this.size.y)
+            item.position.y += moveSpeed;
+            if (item.position.y > this.windowSize.y + this.size.y)
             {
                 array = array.splice(index, 1);
+            }
+            if (item.position.y + this.size.y > player.position.y
+                && !(item.position.x + this.size.x < player.position.x
+                || item.position.x > player.position.x + player.size.x))
+            {
+                array = array.splice(index, 1);
+                score.increaseScore(5);
             }
         });
         this.spawn.timer += deltaTime;
         if (this.spawn.timer > this.spawn.interval)
         {
             this.spawn.timer -= this.spawn.interval;
-            this.positions.push(this.generateSpawnPosition());
+            this.items.push(this.generateItem());
         }
     }
 
+    /**
+     * Generates item
+     */
+    generateItem()
+    {
+        // Generates a random number from 0 to 3 (inclusive)
+        const randomIndex = Math.floor(Math.random() * 100) % 4;
+        return { imageIndex: randomIndex, position: this.generateSpawnPosition() };
+    }
     /**
      * Generates a spawn position
      */
@@ -60,13 +79,13 @@ class Drops
      */
     draw(context)
     {
-        for (const position of this.positions)
+        for (const item of this.items)
         {
-            context.setTransform(1, 0, 0, 1, position.x + (this.size.x * 0.5), position.y + (this.size.y * 0.5));
+            context.setTransform(1, 0, 0, 1, item.position.x + (this.size.x * 0.5), item.position.y + (this.size.y * 0.5));
             context.rotate(0);
 
             context.drawImage(
-                this.spritesheet.texture,
+                this.spritesheet.textures[item.imageIndex],
                 this.spritesheet.textureRect.position.x,
                 this.spritesheet.textureRect.position.y,
                 this.spritesheet.textureRect.width,

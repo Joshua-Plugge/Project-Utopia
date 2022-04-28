@@ -32,7 +32,6 @@ class Score
      */
     update(deltaTime)
     {
-        this.score += 1;
     }
 
     /**
