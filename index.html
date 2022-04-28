@@ -4,13 +4,94 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="stylesheet" type="text/css" href="assets/css/Styles.css">
 
-  <title>Project Utopia</title>
+    <title>Project Utopia</title>
+
+    <!-- Styling was done here due to a unknown conflict while placing it in a styles.css it not displaying properly. -->
+  <style>
+    body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    overflow: hidden;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    }
+    
+    .bg {
+      /* The image used */
+      background-image: url("assets/img/IntroScreen.jpg");
+        
+      /* Full height */
+      height: 100%; 
+    
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .gametitle {
+      /* The image used */
+      background-image: url("assets/img/Title.png");
+    
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-right: 3%;
+    }
+
+    .startbutton 
+    {
+        background-image: url(assets/img/StartGameIdle.png);
+        width: 255px;
+        height: 60px;
+        position: absolute;
+        margin-top: 4%;
+        margin-left: 42%;
+    }
+    
+    .startbutton:hover 
+    {
+        background-image: url(assets/img/StartGameHover.png);
+        width: 300px;
+        height: 105px;
+        position: absolute;
+        margin-top: 3%;
+        margin-left: 41%;
+    }
+
+    .howtoplaybutton 
+    {
+        background-image: url(assets/img/HowtoplayIdle.png);
+        width: 255px;
+        height: 60px;
+        position: absolute;
+        margin-top: 12%;
+        margin-left: 42%;
+    }
+    
+    .howtoplaybutton:hover 
+    {
+        background-image: url(assets/img/HowtoplayHover.png);
+        width: 300px;
+        height: 105px;
+        position: absolute;
+        margin-top: 11%;
+        margin-left: 41%;
+    }
+    </style>
 </head>
 <body>
-    <a href="game.html">
-        <img src="assets/img/Right Arrow.png" alt="start game" style="width:100px;height:100px;">
-    </a>
+
+    <div class="bg">
+      <div class="gametitle">
+        <img src="" style="width:100%;min-height:350px;">
+      </div> 
+        <a href="game.html"><div class="startbutton"></div></a>
+        <a href="howtoplay.html"><div class="howtoplaybutton"></div></a>
+    </div>
+
 </body>
 </html>

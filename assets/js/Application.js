@@ -22,16 +22,23 @@ class Application
 
         this.prevDt = Date.now();
         this.canvas = new Canvas("game-canvas");
+        this.background = new Background();
         this.player = new Player();
+        this.score = new Score();
         if (app.isTouchDevice)
         {
             this.touchInput = new TouchInput();
-
             this.touchInput.start();
-
         }
-        this.isLeft = false;
-        this.isRight = false;
+        else
+        {
+            this.keyInput = new KeyboardInput();
+            this.keyInput.start();
+        }
+        this.playerInput = {
+            moveLeft: false,
+            moveRight: false
+        };;
     }
 
     /**
@@ -64,11 +71,17 @@ class Application
          * Represents delta time between each update call.
          */
         var dt = this.calcDeltaTime();
+        this.background.update(dt);
         if (app.isTouchDevice) 
         {
-            this.touchInput.update(this, dt);
+            this.touchInput.update(this.playerInput, dt);
         }
-        this.player.update(dt);
+        else
+        {
+            this.keyInput.update(this.playerInput, dt);
+        }
+        this.player.update(this.playerInput, dt);
+        this.score.update(dt);
     }
 
     /**
@@ -77,11 +90,17 @@ class Application
     draw()
     {
         this.canvas.clear();
+        this.background.draw(this.canvas.context2D);
         if (app.isTouchDevice) 
         {
            this.touchInput.draw(this.canvas.context2D); 
         }
+        else
+        {
+            this.keyInput.draw(this.canvas.context2D);
+        }
         this.player.draw(this.canvas.context2D);
+        this.score.draw(this.canvas.context2D);
     }
 
     /**

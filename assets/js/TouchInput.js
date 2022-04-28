@@ -99,15 +99,15 @@ class TouchInput
 
     /**
      * Update input's elements.
-     * @param {Application} application reference to game scene so we can set appropriate movement booleans.
+     * @param {{ moveLeft: boolean, moveRight: boolean }} input reference to input so we can set appropriate movement booleans.
      * @param {number} dt delta time between each update call.
      */
-    update(application, dt)
+    update(input, dt)
     {
         let regions = this.regions;
 
-        application.isLeft = regions[0].isPressed;
-        application.isRight = regions[1].isPressed;
+        input.moveLeft = regions[0].isPressed;
+        input.moveRight = regions[1].isPressed;
     }
 
     /**
@@ -201,6 +201,7 @@ class TouchInput
             region = this.regions[1];
             region.isPressed = true;
         }
+        event.preventDefault();
     }
 
     /**
@@ -234,5 +235,6 @@ class TouchInput
             region = this.regions[1];
             region.isPressed = false;
         }
+        event.preventDefault();
     }
 }
