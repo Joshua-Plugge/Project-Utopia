@@ -73,7 +73,7 @@ class Application
          * Represents delta time between each update call.
          */
         var dt = this.calcDeltaTime();
-        this.background.update(dt);
+        this.background.update(this.score, dt);
         if (app.isTouchDevice) 
         {
             this.touchInput.update(this.playerInput, dt);

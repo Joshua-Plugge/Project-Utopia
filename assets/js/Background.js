@@ -6,32 +6,38 @@ class Background
         this.position = new Vector2(windowSize.x * 0, windowSize.y * 0);
         
         this.size = new Vector2(windowSize.x, windowSize.y);
-        this.spritesheet = {
-            texture: new Image(),
+        this.spritesheets = {
+            textureDestroyedCity: new Image(),
+            textureGoodCity: new Image(),
             textureRect: new Rectangle(0,0,1419,511),
             origin: new Vector2(this.size.x * -0.5,this.size.y * -0.5),
-            opacity: 1.0
+            opacityGoodCity: 0.0
         };
         this.timer = 0;
         this.interval = 50; // in milliseconds
-        this.spritesheet.texture.src = "assets/img/CityBG.png";
+        this.spritesheets.textureGoodCity.src = "assets/img/CityBG.png";
+        this.spritesheets.textureDestroyedCity.src = "assets/img/DestroyedCityBG.png";
     }
 
     /**
-     * No update for background.
+     * Updates background when score is high enough.
+     * @param {Score} score Reference to score.
      * @param {number} deltaTime Represents delta time between each update call.
      */
-    update(deltaTime)
+    update(score, deltaTime)
     {
-        this.timer += deltaTime;
-        while (this.timer > this.interval)
+        if (score.score > 100)
         {
-            this.spritesheet.opacity -= 0.01;
-            this.timer -= this.interval;
-        }
-        if (this.spritesheet.opacity < 0)
-        {
-            this.spritesheet.opacity = 1;
+            this.timer += deltaTime;
+            while (this.timer > this.interval)
+            {
+                this.spritesheets.opacityGoodCity += 0.01;
+                this.timer -= this.interval;
+            }
+            if (this.spritesheets.opacityGoodCity < 0)
+            {
+                this.spritesheets.opacityGoodCity = 1;
+            }
         }
     }
 
@@ -41,18 +47,30 @@ class Background
      */
     draw(context)
     {
-        context.globalAlpha = this.spritesheet.opacity;
         context.setTransform(1, 0, 0, 1, this.position.x + (this.size.x * 0.5), this.position.y + (this.size.y * 0.5));
         context.rotate(0);
 
         context.drawImage(
-            this.spritesheet.texture,
-            this.spritesheet.textureRect.position.x,
-            this.spritesheet.textureRect.position.y,
-            this.spritesheet.textureRect.width,
-            this.spritesheet.textureRect.height,
-            this.spritesheet.origin.x,
-            this.spritesheet.origin.y,
+            this.spritesheets.textureDestroyedCity,
+            this.spritesheets.textureRect.position.x,
+            this.spritesheets.textureRect.position.y,
+            this.spritesheets.textureRect.width,
+            this.spritesheets.textureRect.height,
+            this.spritesheets.origin.x,
+            this.spritesheets.origin.y,
+            this.size.x,
+            this.size.y
+        );
+
+        context.globalAlpha = this.spritesheets.opacityGoodCity;
+        context.drawImage(
+            this.spritesheets.textureGoodCity,
+            this.spritesheets.textureRect.position.x,
+            this.spritesheets.textureRect.position.y,
+            this.spritesheets.textureRect.width,
+            this.spritesheets.textureRect.height,
+            this.spritesheets.origin.x,
+            this.spritesheets.origin.y,
             this.size.x,
             this.size.y
         );
