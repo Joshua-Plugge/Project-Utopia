@@ -8,13 +8,13 @@ class Background
         this.size = new Vector2(windowSize.x, windowSize.y);
         this.spritesheet = {
             texture: new Image(),
-            textureRect: new Rectangle(0,0,80,80),
+            textureRect: new Rectangle(0,0,1419,511),
             origin: new Vector2(this.size.x * -0.5,this.size.y * -0.5),
             opacity: 1.0
         };
         this.timer = 0;
         this.interval = 50; // in milliseconds
-        this.spritesheet.texture.src = "assets/img/Player.png";
+        this.spritesheet.texture.src = "assets/img/CityBG.png";
     }
 
     /**

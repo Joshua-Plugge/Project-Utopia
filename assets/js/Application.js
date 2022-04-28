@@ -39,6 +39,8 @@ class Application
             moveLeft: false,
             moveRight: false
         };;
+
+        this.drops = new Drops(); 
     }
 
     /**
@@ -80,6 +82,7 @@ class Application
         {
             this.keyInput.update(this.playerInput, dt);
         }
+        this.drops.update(dt);
         this.player.update(this.playerInput, dt);
         this.score.update(dt);
     }
@@ -99,6 +102,7 @@ class Application
         {
             this.keyInput.draw(this.canvas.context2D);
         }
+        this.drops.draw(this.canvas.context2D);
         this.player.draw(this.canvas.context2D);
         this.score.draw(this.canvas.context2D);
     }
